@@ -1,0 +1,73 @@
+```{r}
+#1.(a) read text file which creates a data frame called Su
+Su <- read.delim("G:/My Drive/Personal/Grad Program/CSC 587 - Adv Data Mining/Scripts/datamining-main/Rscripts/data/Su_raw_matrix.txt")
+```
+
+```{r}
+#1.(b)
+mean(Su$Liver_2.CEL)  #mean of Liver_2.CEL column
+sd(Su$Liver_2.CEL)   #standard deviation of Liver_2.CEL column
+```
+
+```{r}
+#1.(c)
+colMeans(Su)  #mean or average of each column
+colSums(Su)  #sum of each column
+```
+
+```{r}
+#2.(a) and (b)
+values = rnorm(10000, mean = 0, sd = 1) #changed sd from 1 then to 0.2 and then to 0.5 and ran again each time
+hist(values, xlim = c(-4,4))
+```
+
+```{r}
+library(ggplot2)
+#3.(a) #dat data file
+dat <- data.frame(cond = factor(rep(c("A", "B"), each = 200)), rating = c(rnorm(200), rnorm(200, mean = .8)))
+#3.(b) Overlaid histogram - shows both conditions together and where the counts overlap
+ggplot(dat, aes(x = rating, fill = cond)) + geom_histogram(binwidth = .5, alpha = .5, position = "identity")
+#3.(c) Interleaved histogram - shows both conditions but now has them separate to see how the counts compare 
+ggplot(dat, aes(x = rating, fill = cond)) + geom_histogram(binwidth = .5, position = "dodge")
+#3.(d) Density plots - similar to the histogram but it in a smooth curve rather than bars
+ggplot(dat, aes(x = rating, colour = cond)) + geom_density()
+#3.(e) Density plot with semitransparent fill - has the smooth curve as the density plot but now each condition is filled in by color so you can better see where they overlap
+ggplot(dat, aes(x = rating, fill = cond)) + geom_density(alpha = .3)
+```
+
+```{r}
+library(ggplot2)
+#3.(a) #diabetes data file
+diabetes <- read.csv("G:/My Drive/Personal/Grad Program/CSC 587 - Adv Data Mining/Scripts/datamining-main/Rscripts/data/diabetes_train.csv")
+#3.(b) Overlaid histogram - shows both classes together and where the counts overlap
+ggplot(diabetes, aes(x = mass, fill = class)) + geom_histogram(binwidth = .5, alpha = .5, position = "identity")
+#3.(c) Interleaved histogram - shows both classes but now has them separate to see how the counts compare
+ggplot(diabetes, aes(x = mass, fill = class)) + geom_histogram(binwidth = .5, position = "dodge")
+#3.(d) Density plots - similar to the histogram but it in a smooth curve rather than bars
+ggplot(diabetes, aes(x = mass, colour = class)) + geom_density()
+#3.(e) Density plot with semitransparent fill - has the smooth curve as the density plot but now each class is filled in by color so you can better see where they overlap
+ggplot(diabetes, aes(x = mass, fill = class)) + geom_density(alpha = .3)
+```
+
+```{r}
+library(tidyr)
+#4 titanic data file
+passengers <- read.csv("G:/My Drive/Personal/Grad Program/CSC 587 - Adv Data Mining/Scripts/datamining-main/Rscripts/data/titanic.csv")
+#4.(a)
+passengers %>% drop_na() %>% summary() #This operation removes any rows that have missing values and then creates a summary for each column of the newly filtered data
+#4.(b)
+passengers %>% filter(Sex == "male") #This operation filters the passengers to show only the male passengers
+#4.(c)
+passengers %>% arrange(desc(Fare)) #This operation arranges the passengers by the Fare amount in descending order (largest to smallest)
+#4.(d)
+passengers %>% mutate(FamSize = Parch + SibSp) #This operation creates a new  column called FamSize, which is calculated by adding the Parch and SibSp columns
+#4.(e)
+passengers %>% group_by(Sex) %>% summarise(meanFare = mean(Fare), numSurv = sum(Survived)) #This operation groups the data by Sex (female and male), then creates a mean or average of the Fare amount for each Sex and the number that survived for each Sex
+```
+
+```{r}
+#5
+quantile(diabetes$skin, probs = c(0.1, 0.3, 0.5, 0.6)) #Calculates the 10th, 30th, 50th, and 60th percentiles of the skin attribute
+```
+
+
