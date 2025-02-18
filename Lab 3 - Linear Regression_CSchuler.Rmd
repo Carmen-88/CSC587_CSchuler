@@ -1,0 +1,32 @@
+---
+title: "Lab 3 - Linear Regression"
+author: "Carmen"
+date: "2025-02-18"
+output: html_document
+---
+
+```{r}
+#Problem 1
+data <- income.data <- read.csv("G:/My Drive/Personal/Grad Program/CSC 587 - Adv Data Mining/Scripts/datamining-main/Rscripts/data/income.data.csv")
+model1 <- lm(happiness ~ income, data = data) #fit a multiple linear regression model
+summary(model1)
+coefficients <- coef(model1)
+ggplot(data = data, aes(x=income, y = happiness)) + geom_point() + geom_abline(intercept = coefficients[1], slope = coefficients[2], color = "red") + labs(title = "Scatter Plot with Regression Line") #plot the data with regression line
+
+#Regression Equation: Happiness = 0.20427 + (0.71383 x income)
+#R^2: 0.7493; this indicates that there is a pretty strong relationship between income and happiness.
+#Slope: The slope is 0.71383 which means the rate of change between happiness and income. The slope is positive which means as income increases, so does happiness.
+
+```
+
+```{r}
+#Problem 2
+residuals1 <- residuals(model1) #calculate the residuals of the model
+plot(residuals1, main = "Residuals of Simple Linear Regression") #plotting the residuals
+RSS1 <- sum(residuals1) #calculate the residual sum of squares
+MSE1 <- mean(residuals1) #calculate the mean squared error
+#The residuals indicate the difference between the actual value of happiness (dependent variable) and the predicted value of the regression model.There are some outliers but in general there does seem to be a pattern so it could be a good fit.
+#RSS: 3.59; The RSS shows the sum of square difference between the actual value of happiness and the predicted value in the model. The lower RSS indicates the model is a good fit to the data.
+#MSE: 6.9074; The MSE shows the average square difference between the actual value and the predicted value in the model. The lower the MSE the better the fit is to the data.
+```
+
